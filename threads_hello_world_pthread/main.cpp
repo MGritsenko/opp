@@ -4,7 +4,7 @@
 #include <vector>
 #include <cstdlib>
 
-#define NUM_OF_THREADS_DEFAULT 4
+const int NUM_OF_THREADS_DEFAULT = 4;
 
 struct ThreadArg {
     int id;
@@ -14,7 +14,7 @@ void* thread_func(void *arg) {
     int thread_id = static_cast<ThreadArg*>(arg)->id;
 
     std::ostringstream out;
-    out << "Hello, I am thread #" << thread_id << "\n";
+    out << "Hello, I am thread #" << thread_id << "!\n";
     std::cout << out.str();
 
     return 0;
@@ -29,12 +29,14 @@ int main(int argc, char **argv) {
 
     for (int i = 0; i < num_of_threads; i++) {
         thread_args[i].id = i;
+        pthread_attr_init(&thread_attrs[i]);
         pthread_attr_setdetachstate(&thread_attrs[i], PTHREAD_CREATE_JOINABLE);
         pthread_create(&threads[i], &thread_attrs[i], &thread_func, &thread_args[i]);
     }
 
     for (int i = 0; i < num_of_threads; i++) {
         pthread_join(threads[i], NULL);
+        pthread_attr_destroy(&thread_attrs[i]);
     }
 
     return 0;

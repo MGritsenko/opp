@@ -8,7 +8,7 @@ const int NUM_OF_THREADS_DEFAULT = 4;
 
 void thread_func(int thread_id) {
     std::ostringstream out;
-    out << "Hello, I am thread #" << thread_id << "\n";
+    out << "Hello, I am thread #" << thread_id << "!\n";
     std::cout << out.str();
 }
 
