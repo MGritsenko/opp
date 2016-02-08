@@ -4,6 +4,8 @@
 #include <sstream>
 #include <vector>
 
+const int NUM_OF_THREADS_DEFAULT = 4;
+
 void thread_func(int thread_id) {
     std::ostringstream out;
     out << "Hello, I am thread #" << thread_id << "\n";
@@ -11,14 +13,17 @@ void thread_func(int thread_id) {
 }
 
 int main(int argc, char **argv) {
-    int num_of_threads = (argc > 1 ? std::stoi(argv[1]) : 4);
+    int num_of_threads = (argc > 1 ? std::stoi(argv[1]) : NUM_OF_THREADS_DEFAULT);
 
     std::vector<std::thread> threads;
+
     for (int i = 0; i < num_of_threads; i++) {
         threads.push_back(std::thread(thread_func, i));
     }
+
     for (auto &thread : threads) {
         thread.join();
     }
+
     return 0;
 }
