@@ -1,3 +1,7 @@
+/**
+  * Hello world example with POSIX threads.
+ **/
+
 #include <pthread.h>
 #include <iostream>
 #include <sstream>

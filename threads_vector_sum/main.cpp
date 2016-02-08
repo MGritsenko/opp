@@ -1,3 +1,7 @@
+/**
+  * Vector sum example with C++11 threads.
+ **/
+
 #include <string>
 #include <thread>
 #include <iostream>
