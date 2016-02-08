@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 
-const int NUM_OF_THREADS_DEFAULT = 4;
+const int NUM_OF_THREADS_DEFAULT = std::thread::hardware_concurrency();
 
 void thread_func(int thread_id) {
     std::ostringstream out;
