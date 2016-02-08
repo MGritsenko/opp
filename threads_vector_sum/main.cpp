@@ -24,11 +24,11 @@ std::vector<int> get_chunk_sizes(int size, int num_of_chunks) {
     return chunk_sizes;
 }
 
-using Value = int;
+using Value = double;
 using Vector = std::vector<Value>;
 
 void init_vector(Vector &data) {
-    Value value = 0;
+    auto value = 0;
     for (auto &elem: data) {
         elem = value++;
     }
