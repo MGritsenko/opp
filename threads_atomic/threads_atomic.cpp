@@ -8,12 +8,13 @@
 #include <vector>
 #include <iomanip>
 #include <iostream>
+#include <functional>
 
 const int NUM_OF_THREADS_DEFAULT = std::thread::hardware_concurrency();
 
 template <class ValueT>
-void thread_func(const ValueT &val, std::atomic<ValueT> *sum) {
-    *sum += val; // sum into shared atomic var
+void thread_func(const ValueT &val, std::atomic<ValueT> &sum) {
+    sum += val; // sum into shared atomic var
 }
 
 int compute_sum(int num_of_threads) {
@@ -21,7 +22,7 @@ int compute_sum(int num_of_threads) {
     std::atomic<int> sum(0);
 
     for (int i = 0; i < num_of_threads; i++) {
-        threads.push_back(std::thread(thread_func<int>, i, &sum));
+        threads.push_back(std::thread(thread_func<int>, i, std::ref(sum)));
     }
 
     for (auto &thread : threads) {
