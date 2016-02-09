@@ -2,11 +2,11 @@
   * Hello world example with C++11 threads.
  **/
 
-#include <string>
 #include <thread>
+#include <string>
+#include <vector>
 #include <iostream>
 #include <sstream>
-#include <vector>
 
 const int NUM_OF_THREADS_DEFAULT = std::thread::hardware_concurrency();
 

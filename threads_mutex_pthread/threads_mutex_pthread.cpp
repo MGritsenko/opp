@@ -3,9 +3,9 @@
  **/
 
 #include <pthread.h>
+#include <vector>
 #include <iostream>
 #include <sstream>
-#include <vector>
 #include <cstdlib>
 
 const int NUM_OF_THREADS_DEFAULT = 4;
