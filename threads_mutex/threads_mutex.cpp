@@ -9,13 +9,14 @@
 #include <sstream>
 #include <vector>
 #include <iomanip>
+#include <functional>
 
 const int NUM_OF_THREADS_DEFAULT = std::thread::hardware_concurrency();
 
 template <class ValueT>
-void thread_func(const ValueT &val, ValueT *sum, std::mutex *mutex) {
-    std::unique_lock<std::mutex> lock(*mutex);
-    *sum += val; // sum into shared var
+void thread_func(const ValueT &val, ValueT &sum, std::mutex &mutex) {
+    std::unique_lock<std::mutex> lock(mutex);
+    sum += val; // sum into shared var
 }
 
 int compute_sum(int num_of_threads) {
@@ -24,7 +25,7 @@ int compute_sum(int num_of_threads) {
     int sum = 0;
 
     for (int i = 0; i < num_of_threads; i++) {
-        threads.push_back(std::thread(thread_func<int>, i, &sum, &mutex));
+        threads.push_back(std::thread(thread_func<int>, i, std::ref(sum), std::ref(mutex)));
     }
 
     for (auto &thread : threads) {
