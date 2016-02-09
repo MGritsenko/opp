@@ -6,7 +6,7 @@ CONFIG -= qt
 QMAKE_LIBS += -lpthread
 
 SOURCES += \ 
-    main.cpp
+    threads_hello_world_pthread.cpp
 
 HEADERS += 
 

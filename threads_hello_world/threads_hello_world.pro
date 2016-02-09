@@ -6,7 +6,7 @@ CONFIG -= qt
 QMAKE_CXXFLAGS += -std=c++11 -pthread
 
 SOURCES += \ 
-    main.cpp
+    threads_hello_world.cpp
 
 HEADERS += 
 
