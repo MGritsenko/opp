@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <sstream>
+#include <algorithm>
 
 const int MATRIX_SIZE_DEFAULT = 10;
 
@@ -29,9 +30,11 @@ void make_matrix_and_send_columns(int size, int matrix_size) {
 	MPI_Type_vector(matrix_size, 1, matrix_size, MPI_DOUBLE, &col_type);
 	MPI_Type_commit(&col_type);
 				
-	// Send each matrix column to corresponding rank.	
+	// Send each matrix's column to corresponding rank.	
 	for (int dest_rank = 1; dest_rank < size; dest_rank++) {
-		MPI_Send(&matrix[0] + dest_rank, 1, col_type, dest_rank, 123, MPI_COMM_WORLD);
+		// For the case when there are more ranks than columns.
+		const int col_index = std::min(dest_rank, matrix_size - 1); 
+		MPI_Send(&matrix[0] + col_index, 1, col_type, dest_rank, 123, MPI_COMM_WORLD);
 	}
 	
 	MPI_Type_free(&col_type);	
@@ -48,7 +51,7 @@ std::vector<double> recv_column() {
 	
 	// Recv and print column.
 	std::vector<double> column(col_size);
-	MPI_Recv(&column[0], col_size, MPI_DOUBLE, src_rank, tag, MPI_COMM_WORLD);	
+	MPI_Recv(&column[0], col_size, MPI_DOUBLE, src_rank, tag, MPI_COMM_WORLD, MPI_STATUS_IGNORE);	
 	return column;
 }
 
