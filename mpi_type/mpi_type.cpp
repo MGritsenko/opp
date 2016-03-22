@@ -16,7 +16,7 @@ std::vector<double> make_matrix(int size) {
 	std::vector<double> matrix(size*size);
 	for (int i = 0; i < size; i++) {
 		for (int j = 0; j < size; j++) {
-			matrix[i*size + j] = i + j;
+			matrix[i*size + j] = (i + 1)*j;
 		}
 	}
 	return matrix;
